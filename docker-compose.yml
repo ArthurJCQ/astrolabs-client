@@ -1,0 +1,5 @@
+node:
+        build: docker/node
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/symfony
+        command: bash -c "yarn && yarn encore dev"
