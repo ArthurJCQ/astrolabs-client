@@ -15,7 +15,7 @@ import {
     connectRouter,
     routerMiddleware
 } from 'connected-react-router';
-
+import 'bootstrap/dist/css/bootstrap.css';
 import astronaut from './reducers/astronaut/';
 import astronautRoutes from './routes/astronaut';
 

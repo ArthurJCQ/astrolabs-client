@@ -13,5 +13,26 @@ export function success(retrieved) {
 }
 
 export function list() {
-    // TODO : DISPATCH AND FETCH
+    return (dispatch) => {
+        dispatch(loading(true));
+        dispatch(error(''));
+
+        fetch('http://astronauts-labs.local/api/astronauts') // Call the API with the fetch function
+        .then(response =>
+            response
+              .json()
+              .then(retrieved => (retrieved))
+          )
+        .then((retrieved) => {
+            // Your code for handling the data you get from the API
+            dispatch(loading(false));
+            dispatch(success(retrieved));
+
+        })
+        .catch(e => {
+            // Handling data on erros
+            dispatch(loading(false));
+            dispatch(error(e.message));
+        });
+    }
 }
