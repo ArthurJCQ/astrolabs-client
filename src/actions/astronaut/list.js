@@ -17,22 +17,24 @@ export function list() {
         dispatch(loading(true));
         dispatch(error(''));
 
-        fetch('http://astronauts-labs.local/api/astronauts') // Call the API with the fetch function
-        .then(response =>
-            response
+        fetch('http://localhost/api/astronauts') // Call the API with the fetch function
+        .then(response => {
+            if (!response.ok) { throw response };
+            return response
               .json()
               .then(retrieved => (retrieved))
-          )
+        })
         .then((retrieved) => {
-            // Your code for handling the data you get from the API
+            // Handle data get from API
             dispatch(loading(false));
             dispatch(success(retrieved));
-
         })
-        .catch(e => {
+        .catch(err => {
             // Handling data on erros
-            dispatch(loading(false));
-            dispatch(error(e.message));
+            err.json().then((e) => {
+                dispatch(loading(false));
+                dispatch(error(e.error.exception[0].message));
+            })
         });
     }
 }

@@ -23,7 +23,7 @@ export function loading(state = false, action) {
 export function created(state = null, action) {
     switch (action.type) {
         case 'ASTRONAUT_CREATE_SUCCESS':
-            return action.retrieved;
+            return action.created;
 
         default:
             return state;

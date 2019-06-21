@@ -7,6 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import NavBar from '../templates/Navbar';
+import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class List extends Component {
     static propTypes = {
@@ -29,26 +34,30 @@ class List extends Component {
             <div>
                 <NavBar />
                 {this.props.loading &&
-                    <p>LOADING</p>
+                    <Alert variant="success">LOADING</Alert>
                 }
                 {this.props.error &&
-                    <p>ERROR: {this.props.error}</p>
+                    <Alert variant="danger">ERROR: {this.props.error}</Alert>
                 }
                 <CardDeck style={{margin: "50px"}}>
                     {this.props.retrieved &&
                         this.props.retrieved.map(item => (
-                            <Card style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="astronaut.png" />
-                                <Card.Body>
-                                    <Card.Title>{item.name}</Card.Title>
-                                    <Card.Text>
-                                        {`Cet astronaute a ${item.age} ans,
-                                        il vient de la planète ${item.planet}
-                                        et a gagné au total ${item.score} point(s).`}
-                                    </Card.Text>
-                                    <Button variant="primary">Voir l'astronaute</Button>
-                                </Card.Body>
-                            </Card>
+                            <Col md={4} key={item.id}>
+                                <Card>
+                                    <Card.Img variant="top" src="astronaut.png" />
+                                    <Card.Body>
+                                        <Card.Title>{item.name}</Card.Title>
+                                        <Card.Text>
+                                            {`Cet astronaute a ${item.age} ans,
+                                            il vient de la planète ${item.planet}
+                                            et a gagné au total ${item.score} point(s).`}
+                                        </Card.Text>
+                                        <LinkContainer to={`/show/${item.id}`}>
+                                            <Button variant="primary">Voir l'astronaute</Button>
+                                        </LinkContainer>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
                         ))
                     }
                 </CardDeck>
