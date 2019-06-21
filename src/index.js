@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Moment from 'moment';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { reducer as form } from 'redux-form';
 import { Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import {

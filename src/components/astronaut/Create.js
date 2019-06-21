@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { create } from '../../actions/astronaut/create';
+import { create, reset } from '../../actions/astronaut/create';
 import PropTypes from 'prop-types';
 import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
@@ -9,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import NavBar from '../templates/Navbar';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class Create extends Component {
     static propTypes = {
@@ -16,6 +16,7 @@ class Create extends Component {
         loading: PropTypes.bool.isRequired,
         created: PropTypes.object,
         create: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired
     };
 
     constructor() {
@@ -29,16 +30,16 @@ class Create extends Component {
     }
 
     componentDidMount() {
+    }
 
+    componentWillUnmount() {
+        this.props.reset();
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
         const values = this.state;
-
-        console.log(this.state);
-
         this.props.create(values);
     }
 
@@ -51,6 +52,9 @@ class Create extends Component {
             }
             {this.props.error &&
                 <Alert variant="danger">ERROR: {this.props.error}</Alert>
+            }
+            {this.props.created &&
+                <Alert variant="success">Astronaute créé ! Le consulter <LinkContainer to={`/show/${this.props.created.id}`}><a>ici</a></LinkContainer></Alert>
             }
             <Container>
                 <Col md={{ span: 6, offset: 3 }}>
@@ -94,7 +98,8 @@ const mapStateToProps = state => {
     return { created, error, loading };
 };
 const mapDispatchToProps = dispatch => ({
-    create: values => dispatch(create(values))
+    create: values => dispatch(create(values)),
+    reset: () => dispatch(reset())
 });
 export default connect(
     mapStateToProps,

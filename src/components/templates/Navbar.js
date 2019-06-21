@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
-import { withRouter } from 'react-router-dom';
 
 class NavBar extends Component {
 
@@ -13,7 +11,7 @@ class NavBar extends Component {
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand>
                     <img
-                        src="astronaut-icon.png"
+                        src={`${process.env.PUBLIC_URL}/astronaut-icon.png`}
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
@@ -33,9 +31,5 @@ class NavBar extends Component {
     }
 }
 
-const mapStateToProps = state => {
-};
-const mapDispatchToProps = dispatch => ({
-});
 export default connect(
 )(NavBar);

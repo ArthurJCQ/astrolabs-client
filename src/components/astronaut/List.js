@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { list } from '../../actions/astronaut/list';
+import { list, reset } from '../../actions/astronaut/list';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import NavBar from '../templates/Navbar';
 import Alert from 'react-bootstrap/Alert';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -21,12 +18,12 @@ class List extends Component {
         list: PropTypes.func.isRequired
     };
 
-    constructor() {
-        super();
-    }
-
     componentDidMount() {
         this.props.list();
+    }
+
+    componentWillUnmount() {
+        this.props.reset();
     }
 
     render() {
@@ -44,7 +41,7 @@ class List extends Component {
                         this.props.retrieved.map(item => (
                             <Col md={4} key={item.id}>
                                 <Card>
-                                    <Card.Img variant="top" src="astronaut.png" />
+                                    <Card.Img variant="top" src={`${process.env.PUBLIC_URL}/astronaut.png`} />
                                     <Card.Body>
                                         <Card.Title>{item.name}</Card.Title>
                                         <Card.Text>
@@ -74,7 +71,8 @@ const mapStateToProps = state => {
     return { retrieved, loading, error };
 };
 const mapDispatchToProps = dispatch => ({
-    list: () => dispatch(list())
+    list: () => dispatch(list()),
+    reset: () => dispatch(reset())
 });
 export default connect(
     mapStateToProps,
